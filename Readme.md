@@ -1,89 +1,79 @@
 # Spigot Plugin Template
 
-[![Build Status](https://github.com/Silthus/spigot-plugin-template/workflows/Build/badge.svg)](../../actions?query=workflow%3ABuild)
-[![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/Silthus/spigot-plugin-template?include_prereleases&label=release)](../../releases)
-![Spiget tested server versions](https://img.shields.io/spiget/tested-versions/79903)
-[![Spiget Downloads](https://img.shields.io/spiget/downloads/79903)](https://www.spigotmc.org/resources/splugintemplate.79903/)
-[![Spiget Rating](https://img.shields.io/spiget/rating/79903)](https://www.spigotmc.org/resources/splugintemplate.79903/)
-[![codecov](https://codecov.io/gh/Silthus/spigot-plugin-template/branch/master/graph/badge.svg)](https://codecov.io/gh/Silthus/spigot-plugin-template)
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
-[![Discord Shield](https://discordapp.com/api/guilds/905798902874267690/widget.png?style=shield)](https://discord.gg/R4st4QxAjb)
+このテンプレートを使用すると、[Gradle](https://gradle.org/)を使用して高品質のSpigotプラグインを簡単に開発できます。
 
-You can use this template to develop your own high quality Spigot plugins using [Gradle](https://gradle.org/) with ease.
+> Minecraftネットワークを30秒未満でクイックスタートするには、[minecraft-server-template](https://github.com/Silthus/minecraft-server-template)を参照してください。
 
-> See the [minecraft-server-template](https://github.com/Silthus/minecraft-server-template) for quick starting your Minecraft network in under 30 seconds.
 
-* [Features](#features)
-* [Quickstart setup](#quickstart-setup)
-* [Releasing a new version of your plugin](#releasing-a-new-version-of-your-plugin)
-  * [Commit message format](#commit-message-format)
-* [Publishing your maven package](#publishing-your-maven-package)
-  * [About the group and artifactId](#about-the-group-and-artifactid)
-  * [Github Package Authentication](#github-package-authentication)
-* [Debugging your plugin](#debugging-your-plugin)
-  * [Copy your plugin automatically](#copy-your-plugin-automatically)
-  * [Running and debugging the Minecraft server](#running-and-debugging-the-minecraft-server)
-* [References](#references)
+* [機能](#features)
+* [クイックスタートセットアップ](#quickstart-setup)
+* [プラグインの新バージョンのリリース](#releasing-a-new-version-of-your-plugin)
+  * [コミットメッセージのフォーマット](#commit-message-format)
+* [Mavenパッケージの公開](#publishing-your-maven-package)
+  * [グループとArtifactIdについて](#about-the-group-and-artifactid)
+  * [Githubパッケージの認証](#github-package-authentication)
+* [プラグインのデバッグ](#debugging-your-plugin)
+  * [プラグインの自動コピー](#copy-your-plugin-automatically)
+  * [Minecraftサーバーの実行とデバッグ](#running-and-debugging-the-minecraft-server)
+* [参考文献](#references)
 
-## Features
+## 機能
 
-The template or better boilerplate comes with a lot of features that are useful if you want to develop high quality plugins. However you don't need to use all of them, you can simply remove the features you don't need.
+このテンプレート、あるいはベストプラクティスは、高品質なプラグインを開発するために役立つ多くの機能を備えています。ただし、必要のない機能は削除することができます。
 
-* Ready to use [**Gradle**](https://gradle.org/) project with lots of utility tasks
-* Automatic **generation of `plugin.yaml`** based of project properties with [SpiGradle](https://github.com/EntryPointKR/Spigradle/)
-* Integrated [**Spigot test server**](https://github.com/EntryPointKR/Spigradle/) with a one click build, copy plugin and start debugging in IntelliJ task 
-* [**Gradle shadow plugin**](https://imperceptiblethoughts.com/shadow/) to easily ship your needed dependencies with your plugin
-* Example integrations including tests for the [Annotation Command Framework](https://github.com/aikar/commands/) and [Vault](https://github.com/MilkBowl/VaultAPI).
-* **[JUnit 5](https://junit.org/junit5/docs/current/user-guide/)** test setup including [MockBukkit](https://github.com/seeseemelk/MockBukkit) and [AssertJ](https://joel-costigliola.github.io/assertj/)
-* **[Jacoco](https://github.com/jacoco/jacoco) code coverage** report including an upload task to [codecov](https://codecov.io/) 
-* Fully integrated [**semantic-release**](https://semantic-release.gitbook.io/semantic-release/) release pipeline 
-* Automatic [**changelog generation**](https://github.com/semantic-release/changelog) based on [conventional commit messages](https://www.conventionalcommits.org/)
-* [**Github Actions**](https://github.com/features/actions) workflow for build and release
-* Publishing of **maven artifacts** to [GitHub Packages](https://github.com/features/packages)
-  > no more need for self hosted nexus or artifactory server
-* GitHub [**issue templates**](https://help.github.com/en/github/building-a-strong-community/configuring-issue-templates-for-your-repository) for bug and feature requests
-* Contributing and Code of Conduct **guidelines**
-* Nice [**badges**](https://shields.io) to show of your project
+* [**Gradle**](https://gradle.org/) プロジェクトを使用する準備ができている。多くのユーティリティタスクが付属しています。
+* [SpiGradle](https://github.com/EntryPointKR/Spigradle/)に基づいたプロジェクトプロパティに基づく `plugin.yaml` の自動生成
+* [**Spigot テストサーバー**](https://github.com/EntryPointKR/Spigradle/) を統合し、クリックひとつでビルドし、プラグインをコピーし、IntelliJでデバッグを開始するタスクが実現可能
+* [**Gradle shadow plugin**](https://imperceptiblethoughts.com/shadow/) を使用して、必要な依存関係を簡単にプラグインと一緒に出荷
+* [Annotation Command Framework](https://github.com/aikar/commands/) および [Vault](https://github.com/MilkBowl/VaultAPI) のテストを含む統合の例
+* [JUnit 5](https://junit.org/junit5/docs/current/user-guide/)テストセットアップ（[MockBukkit](https://github.com/seeseemelk/MockBukkit)と[AssertJ](https://joel-costigliola.github.io/assertj/)を含む）
+* [Jacoco](https://github.com/jacoco/jacoco)コードカバレッジレポート（[codecov](https://codecov.io/)へのアップロードタスクを含む）
+* 完全に統合された[**semantic-release**](https://semantic-release.gitbook.io/semantic-release/)リリースパイプライン
+* [慣例的なコミットメッセージ](https://www.conventionalcommits.org/)に基づく自動[変更ログ生成](https://github.com/semantic-release/changelog)
+* ビルドとリリースのための[**Github Actions**](https://github.com/features/actions)ワークフロー
+* [GitHub Packages](https://github.com/features/packages)への**mavenアーティファクト**の公開
+  > 自己ホスト型nexusやartifactoryサーバーはもう必要ありません
+* バグや機能リクエストのためのGitHub [**issueテンプレート**](https://help.github.com/en/github/building-a-strong-community/configuring-issue-templates-for-your-repository)
+* 貢献と行動規範の**ガイドライン**
+* プロジェクトを表示するための素晴らしい[**バッジ**](https://shields.io)
 
-## Quickstart setup
+## クイックスタートセットアップ
 
-* Create a [new Github project](https://github.com/Silthus/spigot-plugin-template/generate) using this template.
-* **Clone** the new repository and open it in IntelliJ.
-* **Update** the **gradle.properties** file and change the following variables:
-  * `group`: your-maven-group-id (e.g.: io.github.silthus)
-  * `pluginName`: YourPluginName
-  * `author`: YourName
-* **Update** the `root.projectName` inside **settings.gradle**. This will be your `artifactId`.
-* **Delete** the  `CHANGELOG.md`. It will be generated on your [first release](#releasing-a-new-version-of-your-plugin).
-* **Update** the `README` to point to your project and spigot resource id.
-* **Rename** the java package and plugin to match your project.
-* Then execute the `prepareSpigotPlugins` gradle task this will try to download all plugin denpendencies and puts them into `debug/spigot/plugins/`.
-* **Start** the Minecraft server by executing the `debugPaper` task. This will start the server in the background and you can connect to it using the `localhost:25565` address.
-* **Code away :)** - *and once you are ready, push your commit (in [conventional commit style](#commit-message-format)) to master.*
+* このテンプレートを使用して[新しいGithubプロジェクト](https://github.com/Silthus/spigot-plugin-template/generate)を作成します。
+* **クローン**して、IntelliJで開きます。
+* **gradle.properties** ファイルを **更新**し、以下の変数を変更します。
+  * `group`: あなたのMavenグループID（例：io.github.silthus）
+  * `pluginName`: あなたのプラグイン名
+  * `author`: あなたの名前
+* **settings.gradle** 内の `root.projectName` を更新してください。これがあなたの `artifactId` になります。
+* **CHANGELOG.md** を削除してください。これはあなたの [最初のリリース](#releasing-a-new-version-of-your-plugin) で生成されます。
+* **README** を更新して、あなたのプロジェクトと Spigot リソース ID を指すようにしてください。
+* **Javaパッケージ名** とプラグイン名を、あなたのプロジェクトに合わせてリネームしてください。
+* 次に、 `prepareSpigotPlugins` Gradle タスクを実行してください。これにより、すべてのプラグインの依存関係がダウンロードされ、 `debug/spigot/plugins/` に配置されます。
+* `debugPaper` タスクを実行して、Minecraftサーバーを起動してください。これにより、サーバーがバックグラウンドで開始され、 `localhost:25565` アドレスを使用して接続できます。
+* **コーディングしましょう :)** - *そして準備ができたら、あなたのコミットを [慣例的なコミットスタイル](#commit-message-format) でマスターにプッシュしてください。*
 
 ![Gradle tasks](docs/gradle-tasks.png)
 
-Please read the [Contributing Guidelines](CONTRIBUTING.md) before submitting any pull requests or opening issues.
+プルリクエストを送信する前に、[貢献ガイドライン(CONTRIBUTING.md)](CONTRIBUTING.md)を読んでください。
 
-> **NOTE**  
-> You might need to run the `gradle clean` task after renaming the packages and reimport the gradle project to resolve errors with generating the `plugin.yml`.
+> **注意**  
+> パッケージ名を変更した後に `gradle clean` タスクを実行して、`plugin.yml` の生成に関するエラーを解決するために、gradleプロジェクトを再インポートする必要がある場合があります。
 
-## Releasing a new version of your plugin
+## プラグインの新しいバージョンのリリース
 
-One of the major benefits of this template is the fact that it will **automatically release a new version** on every push to `master` based on your commit messages. This makes sure your plugin is released following the [semantic versioning](https://semver.org/) guidelines. For this to work you have to follow a few simple rules:
+このテンプレートの主な利点の1つは、コミットメッセージに基づいて、`master` ブランチへのプッシュごとに、新しいバージョンが **自動的にリリース** されることです。これにより、[semantic versioning](https://semver.org/) のガイドラインに従って、プラグインがリリースされることが保証されます。これが機能するためには、いくつかの簡単なルールに従う必要があります。
+* masterブランチには、動作確認が完了しているコードのみをコミットしてください。*大規模な機能やバグ修正を行う場合は、プルリクエストを使用し、準備ができたらマージしてください。*
+* すべてのバグ修正、機能、変更には、1つのコミットが関連付けられる必要があります。*複数のバグ、機能などを1つの巨大なコミットメッセージに混ぜないでください。コミットのサイズを小さくし、頻繁にコミットしてください。*
+* コミットメッセージは、[Conventional Commitsルール](https://www.conventionalcommits.org/)に従う必要があります。
 
-* Commit only working and tested code to the master branch. *Use Pull Requests to work on bigger features or bug fixes and merge them when you are ready.*
-* Every bugfix, feature and change should have one commit associated with it. *Do not mix multiple bugs, features, etc. into one huge commit message. Keep your commit size small and commit often.*
-* Your commit messages must follow the [conventional commit rules](https://www.conventionalcommits.org/).
+### コミットメッセージのフォーマット
 
-### Commit message format
+より詳しい情報や例については、[conventional commitのホームページ](https://www.conventionalcommits.org/)を参照してください。ここでは、はじめるための簡単な要約を提供します。
 
-See the [conventional commit homepage](https://www.conventionalcommits.org/) for more details and examples on the topic. But here is a quick summary to get you started.
+> Conventional Commits 仕様は、コミットメッセージの上に置かれた軽量な規約です。明示的なコミット履歴を作成するための簡単なルールを提供し、自動化ツールをより簡単に作成することができます。この規約は、[SemVer](http://semver.org/)と組み合わせて、コミットメッセージで行われた機能、修正、および破壊的変更を説明します。
 
-> The Conventional Commits specification is a lightweight convention on top of commit messages. It provides an easy set of rules for creating an explicit commit history; which makes it easier to write automated tools on top of. This convention dovetails with [SemVer](http://semver.org/), by describing the features, fixes, and breaking changes made in commit messages.
-
-The commit message should be structured as follows:
+コミットメッセージは、以下のように構成する必要があります：
 
 ```text
 <type>[optional scope]: <description>
@@ -92,58 +82,57 @@ The commit message should be structured as follows:
 
 [optional footer(s)]
 ```
+コミットには、ライブラリまたはプラグインの消費者に意図を伝えるために、以下の構造要素が含まれます。
 
-The commit contains the following structural elements, to communicate intent to the consumers of your library or plugin:
+* `fix:` 修正のタイプのコミットは、コードベースのバグを修正します（これはセマンティックバージョニングにおけるPATCHに相当します）。
+* `feat:` 機能のタイプのコミットは、コードベースに新しい機能を導入します（これはセマンティックバージョニングにおけるMINORに相当します）。
+* `BREAKING CHANGE:` フッターに BREAKING CHANGE: を含むまたはタイプ/スコープの後ろに ! を追加するコミットは、破壊的なAPI変更を導入します（セマンティックバージョニングにおけるMAJORに相当します）。BREAKING CHANGEは、任意のタイプのコミットの一部となる可能性があります。
+* `fix:` および `feat:` 以外のタイプも許可されており、たとえば @commitlint/config-conventional（Angular規約に基づく）では、`build:`、`chore:`、`ci:`、`docs:`、`style:`、`refactor:`、`perf:`、`test:`などを推奨しています。
+* BREAKING CHANGE以外のフッターには、gitトレイラーフォーマットに似た規約に従うことができます。
+  追加のタイプはConventional Commits仕様によって強制されるものではありません。セマンティックバージョニングに暗黙の影響はありません（BREAKING CHANGEを含む場合を除く）。
 
-* `fix:` a commit of the type fix patches a bug in your codebase (this correlates with PATCH in semantic versioning).
-* `feat:` a commit of the type feat introduces a new feature to the codebase (this correlates with MINOR in semantic versioning).
-* `BREAKING CHANGE:` a commit that has a footer BREAKING CHANGE:, or appends a ! after the type/scope, introduces a breaking API change (correlating with MAJOR in semantic versioning). A BREAKING CHANGE can be part of commits of any type.
-* types other than fix: and feat: are allowed, for example @commitlint/config-conventional (based on the the Angular convention) recommends `build:`, `chore:`, `ci:`, `docs:`, `style:`, `refactor:`, `perf:`, `test:`, and others.
-* footers other than `BREAKING CHANGE: <description>` may be provided and follow a convention similar to git trailer format.
-Additional types are not mandated by the Conventional Commits specification, and have no implicit effect in semantic versioning (unless they include a BREAKING CHANGE).
+スコープは、コミットのタイプに追加の文脈情報を提供するために、括弧内に含まれることがあります。例： `feat(parser): add ability to parse arrays`。
 
-A scope may be provided to a commit’s type, to provide additional contextual information and is contained within parenthesis, e.g., `feat(parser): add ability to parse arrays`.
-
-Here are some examples:
+以下はいくつかの例です
 
 <details>
-<summary>Commit message with description and breaking change footer</summary>
+<summary>説明と破壊的変更フッターを含むコミットメッセージ</summary>
 
 ```text
-feat: allow provided config object to extend other configs
+feat: 提供された設定オブジェクトが他の設定を拡張できるようにする
 
-BREAKING CHANGE: `extends` key in config file is now used for extending other config files
+破壊的変更: 設定ファイルの `extends` キーは、他の設定ファイルを拡張するために使用されます。
 ```
 
 </details>
 
 <details>
-<summary>Commit message with no body</summary>
+<summary>本文のないコミットメッセージ</summary>
 
 ```text
-docs: correct spelling of CHANGELOG
+docs: CHANGELOGの綴りを修正
 ```
 
 </details>
 
 <details>
-<summary>Commit message with scope</summary>
+<summary>スコープ付きのコミットメッセージ</summary>
 
 ```text
-feat(lang): add polish language
+feat(lang): ポーランド語を追加
 ```
 
 </details>
 
 <details>
-<summary>Commit message with multi-paragraph body and multiple footers</summary>
+<summary>マルチパラグラフの本文と複数のフッターを持つコミットメッセージ</summary>
 
 ```text
-fix: correct minor typos in code
+fix: コード中の細かいタイプミスを修正
 
-see the issue for details
+詳細は問題を参照してください。
 
-on typos fixed.
+修正されたタイポについての詳細は以下の通りです。
 
 Reviewed-by: Z
 Refs #133
@@ -151,46 +140,44 @@ Refs #133
 
 </details>
 
-## Publishing your maven package
+## Mavenパッケージの公開
 
-Your plugin will be automatically published as a maven package on [Github packages](https://github.com/features/packages) as soon as you [release a new version](#releasing-a-new-version-of-your-plugin).
+[新しいバージョンをリリース](#releasing-a-new-version-of-your-plugin)すると、あなたのプラグインは自動的に [Github packages](https://github.com/features/packages) 上でmavenパッケージとして公開されます。
 
-### About the group and artifactId
+### グループとArtifactIdについて
 
-The `group` appended by your `artifactId` is used to uniquely identify your project when importing it in other projects. When you import spigot in your project you use the group `org.spigotmc` followed by the artifactId `spigot-api` and the version.
+あなたの`artifactId`に追加される`group`は、他のプロジェクトでそれをインポートする際に、あなたのプロジェクトを一意に識別するために使用されます。たとえば、あなたが自分のプロジェクトでspigotをインポートする場合、groupに`org.spigotmc`、artifactIdに`spigot-api`を使用してバージョンを指定します。
 
-The following was taken from the [offical maven naming guide](https://maven.apache.org/guides/mini/guide-naming-conventions.html).
+以下は、[公式のmaven命名規則ガイド](https://maven.apache.org/guides/mini/guide-naming-conventions.html)から引用したものです。
 
-* `groupId` uniquely identifies your project across all projects. A group ID should follow [Java's package name rules](https://docs.oracle.com/javase/specs/jls/se6/html/packages.html#7.7). This means it starts with a reversed domain name you control. For example: `org.apache.maven`, `org.apache.commons`.  
-  If you dont't own a domain, you can use the github domain `io.github` appended by your Github username, e.g. `io.github.silthus`
-* `artifactId` is the name of the jar without version. If you created it, then you can choose whatever name you want with lowercase letters and no strange symbols. For example: `maven, commons-math
+* `groupId`はすべてのプロジェクト全体であなたのプロジェクトを一意に識別します。group IDは[Javaのパッケージ名規則](https://docs.oracle.com/javase/specs/jls/se6/html/packages.html#7.7)に従う必要があります。これは、あなたが制御する逆ドメイン名で始まる必要があります。たとえば：`org.apache.maven`、`org.apache.commons`。ドメインを所有していない場合、Githubのドメインである`io.github`にあなたのGithubのユーザー名を追加することができます。たとえば、`io.github.silthus`
+* `artifactId`は、バージョンなしのjarの名前です。あなたが作成した場合、小文字で任意の名前を選択できますが、奇妙な記号は使わないでください。例：`maven`、`commons-math`
 
-### Github Package Authentication
+### Githubパッケージの認証
 
-You need to configure [authentication for Github Packages](https://help.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-gradle-for-use-with-github-packages#authenticating-to-github-packages) if you want to use your maven package in other projects.
+他のプロジェクトであなたのMavenパッケージを使用する場合は、[Githubパッケージの認証を設定する必要があります](https://help.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-gradle-for-use-with-github-packages#authenticating-to-github-packages)。
 
-1. [Create a Github Personal Access Token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
-2. Create or update the `gradle.properties` inside `C:\Users\%username%\.gradle` with the following and replace `YOUR_GITHUB_USERNAME` with your Github username and `YOUR_PERSONAL_ACCESS_TOKEN` with the access token from step 1.
-
+1. [Githubのパーソナルアクセストークンを作成します](https://help.github.com/ja/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)。
+2. `C:\Users\%username%\.gradle` 内の `gradle.properties` を作成または更新し、以下のように置き換えます。`YOUR_GITHUB_USERNAME`をGithubのユーザー名に、`YOUR_PERSONAL_ACCESS_TOKEN`を1.で取得したアクセストークンに置き換えます。
 ```properties
 gpr.user=YOUR_GITHUB_USERNAME
 gpr.key=YOUR_PERSONAL_ACCESS_TOKEN
 ```
 
-## Debugging your plugin
+## プラグインのデバッグ
 
-### Copy your plugin automatically
+### プラグインの自動コピー
 
-You can export your plugin to the plugins directory from your working directory with the Gradle **prepareSpigotPlugins** task. The task will **build and copy** your plugin **automatically** into the `plugins/` directory.
+Gradleの**prepareSpigotPlugins**タスクを使用して、作業ディレクトリからプラグインを`plugins/`ディレクトリに**ビルドしてコピーする**ことができます。
 
-### Running and debugging the Minecraft server
+### Minecraftサーバーの実行とデバッグ
 
-You can run or debug your plugin using the `Server` run configuration from within IntelliJ to automatically download the Minecraft server, built it, copy your and dependent plugins into it and start it in debugging mode.
+IntelliJ内から`Server`実行構成を使用して、Minecraftサーバーを自動的にダウンロードし、ビルドして、あなたと依存関係のあるプラグインをコピーして、デバッグモードで起動することができます。
 
-This is due to the awesome power of Spigradle's debug tasks. Find out more on the [Spigradle Github page](https://github.com/spigradle/spigradle).
+これは、Spigradleのデバッグタスクの素晴らしい機能のおかげです。詳細については、[SpigradleのGithubページ](https://github.com/spigradle/spigradle)を参照してください。
 
-## References
+## 参考文献
 
-* [Spigradle](https://github.com/spigradle/spigradle/): *provides awesome gradle tasks that make your live a lot easier*
-* [semantic-release](https://semantic-release.gitbook.io/semantic-release/): *in my opinion every project should use this!*
-* [conventional commit messages](https://www.conventionalcommits.org/): *do commit message the right way*
+* [Spigradle](https://github.com/spigradle/spigradle/): *あなたの生活をずっと楽にしてくれる素晴らしいgradleタスクを提供します*
+* [semantic-release](https://semantic-release.gitbook.io/semantic-release/): *私の意見では、すべてのプロジェクトがこれを使うべきです！*
+* [conventional commit messages](https://www.conventionalcommits.org/): *正しい方法でコミットメッセージを行います*
